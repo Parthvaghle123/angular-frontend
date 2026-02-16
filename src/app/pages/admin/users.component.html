@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="users-container">
+    <div class="page-header">
+      <h1>Users Management</h1>
+      <p>Manage all registered users</p>
+    </div>
+    <hr />
+
+    <div *ngIf="error" class="error-message">
+      <p>{{error}}</p>
+    </div>
+
+    <div *ngIf="!error">
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <span>Total Users</span>
+            <div class="stat-icon bg-blue">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{totalUsersCount}}</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span>Active Users</span>
+            <div class="stat-icon bg-green">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{activeUsersCount}}</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span>New This Month</span>
+            <div class="stat-icon bg-yellow">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{newThisMonthCount}}</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-title fw-bold">Registration Trend</span>
+            <div class="stat-icon" style="background-color: #6b7280">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+          <div class="state">
+            <div style="font-size: 0.8rem; color: #374151; marginTop: 4px">
+              <div>This Week: {{thisWeekCount}}</div>
+              <div>This Month: {{newThisMonthCount}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="search-filter-container">
+        <div class="search-input position-relative flex-grow-1">
+          <i class="fas fa-search search-icon position-absolute"
+             style="top: 50%; left: 15px; transform: translateY(-50%)"></i>
+          <input
+            type="text"
+            class="form-control ps-5"
+            placeholder="Search by Username, Email, or Phone"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="applyFilters()"
+          />
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="card">
+        <div class="table-container">
+          <div *ngIf="filteredUsers.length === 0" class="empty-state">
+            <i class="fas fa-users-slash fa-3x mb-3"></i>
+            <h3>No users found</h3>
+            <p>Try different search or filters</p>
+          </div>
+          
+          <table *ngIf="filteredUsers.length > 0" class="table">
+            <thead>
+              <tr>
+                <th>USER INFO</th>
+                <th>CONTACT</th>
+                <th>DETAILS</th>
+                <th>REGISTERED</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers">
+                <td>
+                  <strong>{{user.username}}</strong>
+                  <div>ID: {{user._id.slice(-8)}}</div>
+                </td>
+                <td>
+                  <div>
+                    <i class="fas fa-envelope fa-xs"></i> {{user.email}}
+                  </div>
+                  <div>
+                    <i class="fas fa-phone fa-xs"></i> {{user.phone || "N/A"}}
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <i class="fas fa-birthday-cake fa-xs"></i> {{user.dob | date}} ({{calculateAge(user.dob)}} yrs)
+                  </div>
+                  <div>
+                    <i class="fas fa-user fa-xs"></i> 
+                    <span [class]="getGenderBadge(user.gender)">
+                      {{user.gender}}
+                    </span>
+                  </div>
+                </td>
+                <td>{{user.createdAt | date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

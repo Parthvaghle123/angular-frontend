@@ -1,0 +1,35 @@
+<div class="Herosection_1">
+  <div class="container">
+    <div *ngIf="loading" class="d-flex justify-content-center align-items-center my-5">
+      <div class="spinner-border text-success mb-4" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!loading">
+      <div *ngIf="filteredProducts.length === 0"
+           class="alert alert-danger text-center mt-3 fw-bold mb-4 m-auto"
+           style="width: 18%; background-color: #e7414c; color: white;">
+        No products found.
+      </div>
+
+      <div *ngIf="filteredProducts.length > 0" class="container" id="products1">
+        <div *ngFor="let item of filteredProducts" class="box1">
+          <div class="img-box1">
+            <img class="images1" [src]="item.image" [alt]="item.title" />
+          </div>
+
+          <div class="bottom">
+            <h2>{{item.title}}</h2>
+            <h4>{{item.per}}</h4>
+            <h3>₹{{item.price}}.00</h3>
+
+            <button class="btn4" (click)="addToCart(item)">
+              Add Item
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

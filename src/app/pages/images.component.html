@@ -1,0 +1,8 @@
+<div id="products" class="container mt-4 mb-2">
+  <div *ngFor="let item of products" class="text-center">
+    <div class="img-box1">
+      <img [src]="item.image" [alt]="item.title" class="images" />
+    </div>
+    <h6 class="text-center fw-bold mt-1 h6">{{item.title}}</h6>
+  </div>
+</div>

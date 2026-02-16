@@ -1,0 +1,108 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top admin-navbar">
+  <div class="container">
+    <a
+      class="navbar-brand fw-bold fs-4 d-flex"
+      routerLink="/admin/dashboard"
+    >
+      <img
+        src="https://www.starbucks.in/assets/icon/logo.png"
+        alt=""
+        width="50"
+        height="50"
+      />
+      <h3 class="fs-4 ms-1">Starbucks</h3>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#adminNavbarContent"
+      aria-controls="adminNavbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <fa-icon [icon]="faBars"></fa-icon>
+    </button>
+
+    <div class="collapse navbar-collapse" id="adminNavbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/dashboard"
+            routerLinkActive="active fw-bold"
+          >
+            <fa-icon [icon]="faTachometerAlt" class="me-1"></fa-icon>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/users"
+            routerLinkActive="active fw-bold"
+          >
+            <fa-icon [icon]="faUsers" class="me-1"></fa-icon>
+            Users
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/orders"
+            routerLinkActive="active fw-bold"
+          >
+            <fa-icon [icon]="faShoppingCart" class="me-1"></fa-icon>
+            Orders
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/products"
+            routerLinkActive="active fw-bold"
+          >
+            <fa-icon [icon]="faBoxes" class="me-1"></fa-icon>
+            Products
+          </a>
+        </li>
+      </ul>
+
+      <div class="navbar-nav">
+        <div class="nav-item dropdown">
+          <a
+            class="text-decoration-none fw-bold dropdown-toggle text-dark"
+            href="javascript:void(0)"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-shield me-1"></i>
+            Admin
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <span class="dropdown-item-text text-muted small">
+                <i class="fas fa-crown me-1"></i>
+                Administrator
+              </span>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <button
+                class="dropdown-item text-danger"
+                (click)="handleLogout()"
+              >
+                <fa-icon [icon]="faSignOutAlt" class="me-2"></fa-icon>
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

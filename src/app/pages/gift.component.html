@@ -1,0 +1,102 @@
+<div class="Herosection_1">
+  <div class="container">
+    <!-- Initial Loading State -->
+    <div *ngIf="loading && products.length === 0"
+         class="d-flex justify-content-center align-items-center"
+         style="height: 200px; width: 100%;">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="alert alert-danger text-center">❌ {{error}}</div>
+
+    <!-- Main Content -->
+    <ng-container *ngIf="!error && !(loading && products.length === 0)">
+      <!-- Subsequent Loading State -->
+      <div *ngIf="loading" class="d-flex justify-content-center align-items-center my-4">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <ng-container *ngIf="!loading">
+        <div *ngIf="filteredProducts.length === 0"
+             class="alert alert-danger text-center mt-3 fw-bold align-items-center"
+             style="width: 18%; backgroundColor: #e7414c; margin: 20px auto;color: white;">
+          {{products.length === 0 ? "❌ No products found." : " No found products."}}
+        </div>
+
+        <div *ngIf="filteredProducts.length > 0" id="products2">
+          <div *ngFor="let item of filteredProducts" class="box1">
+            <div class="img-box1">
+              <img class="images1" [src]="item.image" [alt]="item.name" />
+            </div>
+            <div class="bottom">
+              <h2>{{item.name}}</h2>
+              <h4>{{item.description}}</h4>
+              <h3>₹{{item.price}}.00</h3>
+              <button class="btn4 btn btn-success" (click)="addToCart(item)">
+                Add Item
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Enhanced Modern Footer -->
+<footer class="text-white pt-5 pb-3 fw-medium shadow-lg footer">
+  <div class="container">
+    <div class="row justify-content-start">
+      <div class="col-md-5 mb-4 text-md-start text-center">
+        <h5 class="text-uppercase fw-bold text-white mb-3 border-white h5 pb-2 hedding-font">
+          Contact
+        </h5>
+        <p class="mb-2">
+          <i class="fas fa-map-marker-alt me-2 text-white"></i>
+          Surat, Gujarat
+        </p>
+        <p class="mb-2">
+          <i class="far fa-envelope me-2 text-white"></i>
+          vaghelaparth2005@gmail.com
+        </p>
+        <p>
+          <i class="fas fa-phone me-2 text-white"></i>
+          +91 8735035021
+        </p>
+      </div>
+    </div>
+
+    <hr class="border-secondary" />
+
+    <div class="row align-items-center justify-content-between">
+      <div class="col-md-6 text-md-start text-center mb-md-0 hedding-font fw-bold">
+        <p class="mb-0">
+          Owned by:
+          <strong class="text-white text-decoration-none">
+          Noob Ninjas
+          </strong>
+        </p>
+      </div>
+
+      <div class="col-md-6 text-md-end text-center">
+        <ul class="list-inline mb-0">
+          <li *ngFor="let social of socials" class="list-inline-item mx-1">
+            <a
+              [href]="social.link"
+              class="social-icon d-inline-flex align-items-center justify-content-center rounded-circle"
+              [attr.aria-label]="social.icon"
+            >
+              <i [class]="'fab fa-' + social.icon"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

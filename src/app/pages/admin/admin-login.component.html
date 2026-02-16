@@ -1,0 +1,65 @@
+<div class="body">
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="login-container">
+      <div class="text-center mb-3">
+        <div
+          class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+          style="width: 60px; height: 60px"
+        >
+          <i class="fas fa-shield-alt text-white fs-3"></i>
+        </div>
+        <h5 class="h2 text-success h3 fw-bold fs-2">Admin Login</h5>
+        <p class="text-muted small mb-0 fw-bold p">
+          Access your admin dashboard
+        </p>
+      </div>
+      <form (ngSubmit)="handleSubmit()">
+        <div class="mb-3">
+          <label class="form-label fw-medium">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control form-control-lg"
+            [(ngModel)]="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-medium">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control form-control-lg"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger py-2 mb-3">
+          <span>{{error}}</span>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-success btn-lg w-100 fw-bold"
+          [disabled]="loading"
+        >
+          <span *ngIf="loading"
+            class="spinner-border spinner-border-sm me-2"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+      </form>
+      <div class="text-center mt-3">
+        <small class="text-muted fw-bold">
+          Secure admin access only
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

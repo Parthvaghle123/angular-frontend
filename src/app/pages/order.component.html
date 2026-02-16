@@ -1,0 +1,180 @@
+<div class="container my-5">
+  <div class="col-lg-10 mx-auto">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <h2 class="order-heading">🛒 My Orders</h2>
+      <select
+        class="form-select select-hover-effect"
+        [(ngModel)]="filter"
+        style="max-width: 200px;"
+      >
+        <option value="All">All</option>
+        <option value="Approved">Approved</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div *ngIf="showCancelToast" class="toast-popup bg-danger d-flex justify-content-between align-items-center">
+       {{cancelToastMessage}}
+      <button
+        class="btn-close btn-close-white ms-2"
+        (click)="showCancelToast = false"
+      ></button>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="alert alert-danger text-center">
+      {{error}}
+    </div>
+
+    <!-- Empty State (only show when not loading and no error) -->
+    <div *ngIf="!loading && !error && filteredOrders.length === 0" class="alert alert-info text-center">
+      <i class="fas fa-box-open me-1"></i> No orders found!
+    </div>
+
+    <div *ngIf="!error">
+    <div *ngFor="let order of filteredOrders; let i = index" 
+         [ngClass]="{
+           'card shadow-sm mb-4 border-start border-4': true,
+           'border-danger': order.status === 'Cancelled',
+           'border-success': order.status === 'Approved',
+           'border-warning': order.status !== 'Cancelled' && order.status !== 'Approved'
+         }">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+          <strong>Order ID:</strong>&nbsp;{{order.orderId}}
+        </div>
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+          <i class="fas fa-calendar-alt me-1 text-secondary"></i>
+          <strong>Date:</strong>&nbsp;{{order.createdAt | date}}
+        </div>
+        <div class="d-flex align-items-center">
+          <strong>Status:</strong>&nbsp;
+          <span
+            [ngClass]="{
+              'badge badge-fixed': true,
+              'bg-danger': order.status === 'Cancelled',
+              'bg-success': order.status === 'Approved',
+              'bg-warning': order.status !== 'Cancelled' && order.status !== 'Approved'
+            }"
+          >
+            {{order.status}}
+          </span>
+          <button
+            *ngIf="order.status === 'Approved'"
+            class="btn btn-sm btn-outline-danger ms-2 fw-bold "
+            data-bs-toggle="modal"
+            data-bs-target="#cancelModal"
+            (click)="openCancelModal(order)"
+          >
+            <i class="fas fa-ban me-1"></i>Cancel
+          </button>
+          <button
+            class="btn btn-sm btn-outline-primary fw-bold ms-2"
+            (click)="downloadPDF(order)"
+          >
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6 mb-2">
+            <i class="fas fa-envelope me-1"></i>
+            <strong>Email:</strong> {{order.email}}
+          </div>
+          <div class="col-md-6 mb-2">
+            <i class="fas fa-phone me-1"></i>
+            <strong>Phone:</strong> {{order.phone}}
+          </div>
+          <div class="col-md-6 mb-2">
+            <i class="fas fa-map-marker-alt me-1"></i>
+            <strong>Address:</strong> {{order.address}}
+          </div>
+          <div class="col-md-6 mb-2">
+            <i class="fas fa-credit-card me-1"></i>
+            <strong>Payment Mode:</strong> {{order.paymentMethod}}
+          </div>
+        </div>
+
+        <div *ngIf="order.status === 'Cancelled' && order.cancelReason" class="text-danger mt-2 fw-semibold">
+          <i class="fas fa-times-circle me-1"></i>
+          <strong>Cancel Reason:</strong> {{order.cancelReason}}
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="table table-bordered text-center align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>Total (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.items">
+                <td class="fs-6">{{item.title}}</td>
+                <td class="fs-6 ">₹{{item.price | number:'1.2-2'}}</td>
+                <td class="text-success fw-bold">{{item.quantity}}</td>
+                <td>
+                  <span
+                    [ngClass]="{
+                      'badge badge-fixed': true,
+                      'bg-danger': item.status === 'Cancelled',
+                      'bg-success': item.status !== 'Cancelled'
+                    }"
+                  >
+                    {{item.status}}
+                  </span>
+                </td>
+                <td class="fw-bold">₹{{(item.price * item.quantity) | number:'1.2-2'}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-end fw-bold">Grand Total</td>
+                <td class="text-success fw-bold">₹{{calculateGrandTotal(order) | number:'1.2-2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cancel Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelModalLabel">Cancel Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancelCloseBtn"></button>
+      </div>
+      <form (submit)="handleCancel($event)">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Reason for Cancellation</label>
+            <select class="form-select" [(ngModel)]="cancelReason" name="cancelReason" required>
+              <option value="" disabled selected>Select a reason</option>
+              <option value="Changed my mind">Changed my mind</option>
+              <option value="Found a better price">Found a better price</option>
+              <option value="Ordered by mistake">Ordered by mistake</option>
+              <option value="Delivery delay">Delivery delay</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3" *ngIf="cancelReason === 'Other'">
+            <label class="form-label">Please specify</label>
+            <textarea class="form-control" [(ngModel)]="customReason" name="customReason" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Cancel Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

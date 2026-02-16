@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger text-center">
+    {{error}}
+  </div>
+
+  <!-- Empty State (only show when no error) -->
+  <div *ngIf="!error && cartItems.length === 0" class="alert alert-warning text-center fw-bold fs-5">
+    🛒 Your cart is empty.
+  </div>
+
+  <div *ngIf="!error && cartItems.length > 0" class="row justify-content-center">
+    <div class="col-lg-11">
+      <div class="table-responsive card-custom">
+        <table class="table table-bordered align-middle text-center shadow-sm ">
+          <thead class="table">
+            <tr class="tr">
+              <th>Image</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td>
+                <img [src]="item.image" [alt]="item.title" width="60" class="img-fluid rounded" />
+              </td>
+              <td>{{ item.title }}</td>
+              <td>₹{{ item.price }}</td>
+              <td>
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                  <button (click)="updateQuantity(item.productId, 'decrease')" class="btn btn-outline-danger btn-sm">
+                    −
+                  </button>
+                  <span class="fw-bold">{{ item.quantity }}</span>
+                  <button (click)="updateQuantity(item.productId, 'increase')" class="btn btn-outline-success btn-sm">
+                    +
+                  </button>
+                </div>
+              </td>
+              <td>₹{{ item.total }}</td>
+              <td>
+                <button (click)="removeFromCart(item.productId)" class="btn btn-danger btn-sm btn-remove">
+                  Remove
+                </button>
+              </td>
+            </tr>
+
+            <!-- Total Amount Row -->
+            <tr>
+              <td colSpan="4" class="text-end fw-bold">
+                Total:
+              </td>
+              <td class="text-success fw-bold fs-5">
+                ₹{{ totalAmount }}
+              </td>
+              <td class="text-center">
+                <a routerLink="/checkout" class="btn btn-success btn-md btn-order">
+                  Order Now
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

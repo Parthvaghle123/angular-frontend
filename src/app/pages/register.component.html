@@ -1,0 +1,151 @@
+<div *ngIf="showSuccessToast" class="toast-popup bg-success">{{toastMessage}}</div>
+
+<div class="body">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="signup-container bg-white p-4 shadow">
+      <h2 class="text-success text-center mb-3 h2">Sign-Up</h2>
+      <hr />
+
+      <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+      <form (submit)="handleSubmit()" autocomplete="off">
+        <div class="mb-3 d-flex flex-column flex-sm-row gap-3">
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Username</label>
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              placeholder="Enter your name"
+              [(ngModel)]="form.username"
+              (input)="handleChange($event)"
+              required
+            />
+            <small *ngIf="errors.username" class="text-danger">{{errors.username}}</small>
+          </div>
+
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="example@gmail.com"
+              [(ngModel)]="form.email"
+              (input)="handleChange($event)"
+              required
+            />
+            <small *ngIf="errors.email" class="text-danger">{{errors.email}}</small>
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex flex-column flex-sm-row gap-3">
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Phone</label>
+            <div class="input-group">
+              <select
+                name="country_code"
+                class="form-select l2"
+                [(ngModel)]="form.country_code"
+                disabled
+              >
+                <option value="+91">+91 </option>
+                <option value="+1">+1 </option>
+                <option value="+44">+44 </option>
+              </select>
+              <input
+                type="tel"
+                name="phone"
+                class="form-control"
+                placeholder="1234567890"
+                [(ngModel)]="form.phone"
+                (input)="handleChange($event)"
+                required
+              />
+            </div>
+            <small *ngIf="errors.phone" class="text-danger">{{errors.phone}}</small>
+          </div>
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Gender</label>
+            <div class="d-flex gap-3 justify-content-center mt-2">
+              <label *ngFor="let g of ['male', 'female', 'other']" style="flex: 1;">
+                <input
+                  type="radio"
+                  name="gender"
+                  [value]="g"
+                  [(ngModel)]="form.gender"
+                  class="d-none align-items-center"
+                />
+                <div
+                  class="p-2 rounded text-center"
+                  [ngClass]="form.gender === g ? 'border border-success bg-light' : 'border'"
+                >
+                  {{g.charAt(0).toUpperCase() + g.slice(1)}}
+                </div>
+              </label>
+            </div>
+            <small *ngIf="errors.gender" class="text-danger">{{errors.gender}}</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea
+            name="address"
+            class="form-control"
+            placeholder="Enter your address"
+            rows="2"
+            style="resize: none; height: 80px;"
+            [(ngModel)]="form.address"
+            (input)="handleChange($event)"
+            required
+          ></textarea>
+          <small *ngIf="errors.address" class="text-danger">{{errors.address}}</small>
+        </div>
+
+        <div class="mb-3 d-flex flex-column flex-sm-row gap-3">
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              class="form-control"
+              [(ngModel)]="form.dob"
+              (input)="handleChange($event)"
+              required
+            />
+            <small *ngIf="errors.dob" class="text-danger">{{errors.dob}}</small>
+          </div>
+          <div class="d-flex flex-column flex-fill">
+            <label class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="********"
+              class="form-control"
+              [(ngModel)]="password"
+              (ngModelChange)="handlePasswordChange()"
+              required
+            />
+            <small class="text-muted">{{strengthMessage}}</small>
+            <small *ngIf="errors.password" class="text-danger d-block">{{errors.password}}</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn7 fw-bold w-100 rounded">
+          Register
+        </button>
+      </form>
+
+      <p class="text-center mt-3">
+        Already registered? 
+        <a
+          routerLink="/login"
+          class="text-decoration-none fw-bold text-success"
+        >
+          Login here
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

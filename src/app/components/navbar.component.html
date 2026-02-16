@@ -1,0 +1,134 @@
+<nav *ngIf="!shouldHideNavbar" class="navbar navbar-expand-lg navbar-light bg-whitesmoke sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex" routerLink="/">
+      <img src="https://www.starbucks.in/assets/icon/logo.png" alt="" width="50" height="50" />
+      <h3 class="ms-1">Starbucks</h3>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto ms-3 gap-5 nav-links">
+        <li class="nav-item">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+            class="nav-link underline-animate"
+          >
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            routerLink="/gift"
+            routerLinkActive="active"
+            class="nav-link underline-animate"
+          >
+            Gift
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            routerLink="/menu"
+            routerLinkActive="active"
+            class="nav-link underline-animate"
+          >
+            Menu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            routerLink="/orders"
+            routerLinkActive="active"
+            class="nav-link underline-animate"
+          >
+            Order
+          </a>
+        </li>
+      </ul>
+
+      <form
+        class="d-flex me-4 search-form mb-1"
+        (submit)="handleSearchSubmit($event)"
+      >
+        <input
+          class="me-2 search bg-transparent head1"
+          type="search"
+          placeholder="Search"
+          id="search"
+          name="searchText"
+          [(ngModel)]="searchText"
+          (ngModelChange)="onSearchChange()"
+          autocomplete="off"
+          autocapitalize="words"
+          autocorrect="off"
+          [spellcheck]="false"
+        />
+        <button class="btn1 btn btn-success" type="submit">
+          <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+        </button>
+      </form>
+
+      <div class="d-flex align-items-center">
+        <a routerLink="/cart" class="btn2 btn btn-success me-3 mb-2">
+          🛒 <strong>MyCart</strong>
+        </a>
+
+        <div class="dropdown nav-item text-center mb-2">
+          <a
+            class="text-decoration-none dropdown-toggle fw-bold text-dark"
+            href="javascript:void(0)"
+            role="button"
+            data-bs-toggle="dropdown"
+          >
+            <i class="fas fa-user-circle"></i> Account
+          </a>
+          <ul class="dropdown-menu custom-dropdown">
+            <ng-container *ngIf="username; else guestLinks">
+              <li class="dropdown-header text-success fw-bold">
+                <i class="fas fa-user me-2"></i> {{username}}
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <button
+                  class="dropdown-item underline-animate"
+                  (click)="handleLogout()"
+                >
+                  <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </button>
+              </li>
+            </ng-container>
+            <ng-template #guestLinks>
+              <li>
+                <a
+                  class="dropdown-item underline-animate"
+                  routerLink="/login"
+                >
+                  <i class="fas fa-sign-in-alt me-2"></i> Login
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item underline-animate"
+                  routerLink="/register"
+                >
+                  <i class="fas fa-user-plus me-2"></i> Sign-Up
+                </a>
+              </li>
+            </ng-template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

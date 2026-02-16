@@ -1,0 +1,51 @@
+.order-heading {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  color: green ;
+}
+
+/* ✅ Click/focus પર green effect override (Bootstrap fix) */
+.form-select:focus {
+  border-color: green !important;
+  box-shadow: 0px 0px 6px rgba(0, 128, 0, 0.5) !important;
+  outline: none !important;
+}
+
+/* ✅ Hover પર green effect */
+.form-select:hover {
+  border-color: green !important;
+  box-shadow: 0px 0px 6px rgba(0, 128, 0, 0.5) !important;
+}
+.badge-fixed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.toast-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}

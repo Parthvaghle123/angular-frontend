@@ -1,0 +1,54 @@
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #6c757d;
+  color: white;
+  font-size: 18px;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  background-color: #ffc107;
+  color: #212529;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.5);
+}
+
+.Herosection_1 {
+  padding-bottom: 20px;
+}
+
+.Herosection_2 {
+  padding-bottom: 20px;
+  background-color: rgba(220, 218, 218, 0.85);
+  margin-bottom: 20px;
+}
+
+.Herosection_3 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding-bottom: 20px;
+  background-color: rgba(220, 218, 218, 0.85);
+}
+
+.btn-font {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.hedding-font {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.head {
+  font-weight: bold;
+}
+
+.card-title {
+  margin-top: 150px;
+}
+footer {
+  background-color: #343a40 !important;
+}
+
+.h5 {
+  border-bottom: 3px solid #ffffff !important;
+}
