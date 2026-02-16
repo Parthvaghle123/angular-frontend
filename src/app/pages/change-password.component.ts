@@ -37,7 +37,7 @@ export class ChangePasswordComponent {
     this.emailVerified = false;
     this.emailCountdown = 3;
 
-    this.http.post<any>("https://backend-l22j.onrender.com/api/user/verify-email", {
+    this.http.post<any>("https://angular-backend-n4nk.onrender.com/api/user/verify-email", {
       email: this.email.toLowerCase(),
     }).subscribe({
       next: (res) => {
@@ -92,7 +92,7 @@ export class ChangePasswordComponent {
     this.showRedirectLoader = false; // Ensure it's false before starting
     this.redirectCountdown = 3;
 
-    this.http.post<any>("https://backend-l22j.onrender.com/api/user/change-password", {
+    this.http.post<any>("https://angular-backend-n4nk.onrender.com/api/user/change-password", {
       email: this.email.toLowerCase(),
       newPassword: this.newPassword,
     }).subscribe({

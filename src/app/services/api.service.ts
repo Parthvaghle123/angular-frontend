@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'https://backend-l22j.onrender.com';
+  private baseUrl = 'https://angular-backend-n4nk.onrender.com';
   
   // For real-time updates across components
   private refreshDataSubject = new Subject<void>();
