@@ -20,6 +20,8 @@ interface Order {
   phone: string;
   address: string;
   paymentMethod: string;
+  paymentStatus?: string;
+  transactionId?: string | null;
   status: string;
   createdAt: string;
   items: OrderItem[];
@@ -159,7 +161,7 @@ export class OrderComponent implements OnInit {
     doc.setFont("times", "normal");
     doc.text("123 Coffee Street, Seattle WA 98101", 20, y + 10);
     doc.text("Phone: 1-800-STARBUCKS", 20, y + 18);
-    doc.text("https://frontend-rho-flax-13.vercel.app", 20, y + 26);
+    doc.text("https://angular-frontend-gamma.vercel.app", 20, y + 26);
 
     doc.setFillColor(...starbucksGreen);
     doc.rect(20, y + 35, 70, 14, "F");
@@ -169,7 +171,7 @@ export class OrderComponent implements OnInit {
     doc.text(`INVOICE ${order.orderId}`, 55, y + 43, { align: "center" });
 
     doc.setFontSize(11);
-    doc.setFont("times", "normal");
+    doc.setFont("times", "normal"); 
     doc.setTextColor(...darkBrown);
     doc.text(
       `Date: ${new Date(order.createdAt)
@@ -195,18 +197,28 @@ export class OrderComponent implements OnInit {
     doc.text(`Address: ${order.address}`, rightX, y + 43);
     doc.text(`Payment: ${order.paymentMethod}`, rightX, y + 51);
     doc.text(`Status: ${order.status}`, rightX, y + 59);
-
+    let detailY = y + 67;
+    if (order.paymentStatus) {
+      doc.text(`Payment Status: ${order.paymentStatus}`, rightX, detailY);
+      detailY += 8;
+    }
+    if (order.transactionId) {
+      doc.text(`Transaction ID: ${order.transactionId}`, rightX, detailY);
+      detailY += 8;
+    }
     if (order.status === "Cancelled" && order.cancelReason) {
       doc.setTextColor(255, 0, 0);
-      doc.text(`Cancel Reason: ${order.cancelReason}`, rightX, y + 67);
+      doc.text(`Cancel Reason: ${order.cancelReason}`, rightX, detailY);
       doc.setTextColor(...darkBrown);
+      detailY += 8;
     }
 
     doc.setDrawColor(...starbucksGreen);
     doc.setLineWidth(0.8);
-    doc.line(20, y + 70, 190, y + 70);
+    const lineY = Math.max(y + 70, detailY + 5);
+    doc.line(20, lineY, 190, lineY);
 
-    const tableStartY = y + 80;
+    const tableStartY = lineY + 10;
     const headerY = tableStartY;
 
     doc.setFillColor(...starbucksGreen);
@@ -287,8 +299,8 @@ export class OrderComponent implements OnInit {
     doc.line(200, 10 + borderHeight, 10, 10 + borderHeight);
     doc.line(10, 10 + borderHeight, 10, 10);
 
-    doc.setFillColor(...starbucksGreen);
-    doc.rect(10, 10 + borderHeight - 3, 190, 3, "F");
+    // doc.setFillColor(...starbucksGreen);
+    // doc.rect(10, 10 + borderHeight - 3, 190, 3, "F");
 
     doc.save(`Starbucks_Invoice_${order.orderId}.pdf`);
   }

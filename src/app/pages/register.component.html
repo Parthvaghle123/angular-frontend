@@ -43,16 +43,7 @@
           <div class="d-flex flex-column flex-fill">
             <label class="form-label">Phone</label>
             <div class="input-group">
-              <select
-                name="country_code"
-                class="form-select l2"
-                [(ngModel)]="form.country_code"
-                disabled
-              >
-                <option value="+91">+91 </option>
-                <option value="+1">+1 </option>
-                <option value="+44">+44 </option>
-              </select>
+              <span class="input-group-text l2">{{ form.country_code }}</span>
               <input
                 type="tel"
                 name="phone"
@@ -60,6 +51,9 @@
                 placeholder="1234567890"
                 [(ngModel)]="form.phone"
                 (input)="handleChange($event)"
+                maxlength="10"
+                inputmode="numeric"
+                pattern="[0-9]*"
                 required
               />
             </div>

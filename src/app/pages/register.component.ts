@@ -111,8 +111,9 @@ export class RegisterComponent {
   handleSubmit() {
     if (!this.validateForm()) return;
 
-    this.apiService.post<any>("api/user/register", {
+    this.apiService.post<any>("register", {
       ...this.form,
+      phone: this.form.country_code + this.form.phone,
       password: this.password,
     }).subscribe({
       next: (res) => {

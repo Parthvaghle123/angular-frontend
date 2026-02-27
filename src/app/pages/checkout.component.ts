@@ -133,6 +133,10 @@ export class CheckoutComponent implements OnInit {
             handler: (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
               this.verifyAndPlaceOrder(response);
             },
+            image: "https://www.starbucks.in/assets/icon/logo.png",
+              theme: {
+        "color": "#198754"   // Green Color
+           },
             modal: {
               ondismiss: () => {
                 this.loading = false;
