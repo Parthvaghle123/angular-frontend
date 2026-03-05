@@ -37,7 +37,7 @@ export class ChangePasswordComponent {
     this.emailVerified = false;
     this.emailCountdown = 3;
 
-    this.http.post<any>("https://angular-backend-vxdp.onrender.com/api/user/verify-email", {
+    this.http.post<any>("https://angular-backend-vbgb.onrender.com/api/user/verify-email", {
       email: this.email.toLowerCase(),
     }).subscribe({
       next: (res) => {
