@@ -5,6 +5,8 @@ import { ApiService } from '../services/api.service';
 import { Product } from '../models/product.model';
 import { Subscription } from 'rxjs';
 
+const DISPLAY_LIMIT = 12;
+
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -15,9 +17,12 @@ import { Subscription } from 'rxjs';
 export class MenuComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  displayedProducts: Product[] = [];
+  showAllProducts = false;
   loading: boolean = false;
   error: string | null = null;
   private queryParamsSubscription?: Subscription;
+  readonly displayLimit = DISPLAY_LIMIT;
 
   socials = [
     { icon: "facebook-f", link: "#" },
@@ -64,16 +69,29 @@ export class MenuComponent implements OnInit, OnDestroy {
   applyFilter(query: string = "") {
     if (!query) {
       this.filteredProducts = [...this.products];
-      return;
+    } else if (this.products.length > 0) {
+      this.filteredProducts = this.products.filter(item =>
+        (item.name || "").toLowerCase().includes(query)
+      );
     }
-    
-    if (this.products.length === 0) {
-      return;
-    }
-    
-    this.filteredProducts = this.products.filter(item =>
-      (item.name || "").toLowerCase().includes(query)
-    );
+    this.updateDisplayedProducts();
+  }
+
+  private updateDisplayedProducts() {
+    const limit = this.showAllProducts ? this.filteredProducts.length : DISPLAY_LIMIT;
+    this.displayedProducts = this.filteredProducts.slice(0, limit);
+  }
+
+  showMore() {
+    this.showAllProducts = true;
+    this.updateDisplayedProducts();
+    this.cdr.detectChanges();
+  }
+
+  showLess() {
+    this.showAllProducts = false;
+    this.updateDisplayedProducts();
+    this.cdr.detectChanges();
   }
 
   fetchProducts() {
@@ -87,6 +105,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.products = data || [];
         this.error = null;
+        this.showAllProducts = false;
 
         // Apply filter if query params exist
         const currentQuery = this.route.snapshot.queryParams['q']?.toLowerCase() || "";

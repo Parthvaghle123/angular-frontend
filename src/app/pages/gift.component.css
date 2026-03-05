@@ -157,3 +157,34 @@ h4 {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.see-more-wrap {
+  grid-column: 1 / -1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.see-more-link {
+  color: #00704A;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.see-more-link:hover {
+  text-decoration: none !important;
+  color: #005a3c;
+}
+
+.see-more-link.see-less {
+  color: #00704A;
+}

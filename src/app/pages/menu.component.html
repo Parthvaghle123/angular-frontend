@@ -21,11 +21,11 @@
         <div *ngIf="filteredProducts.length === 0"
              class="alert alert-danger text-center mt-3 fw-bold align-items-center"
              style="width: 18%; background-color: #e7414c; margin: 20px auto; color: white;">
-          {{products.length === 0 ? "❌ No products found." : " No found products."}}
+          {{products.length === 0 ? "No products found." : " No found products."}}
         </div>
 
         <div *ngIf="filteredProducts.length > 0" id="products3">
-          <div *ngFor="let item of filteredProducts" class="box2">
+          <div *ngFor="let item of displayedProducts" class="box2">
             <div class="img-box1">
               <img class="images1" [src]="item.image" [alt]="item.name" />
             </div>
@@ -37,6 +37,14 @@
                 Add Item
               </button>
             </div>
+          </div>
+          <div class="see-more-wrap" *ngIf="filteredProducts.length > displayLimit">
+            <span *ngIf="!showAllProducts" class="see-more-link" (click)="showMore()">
+              See More ({{ filteredProducts.length - displayLimit }} more products) →
+            </span>
+            <span *ngIf="showAllProducts" class="see-more-link see-less" (click)="showLess()">
+              See less
+            </span>
           </div>
         </div>
       </ng-container>
