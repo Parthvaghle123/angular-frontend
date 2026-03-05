@@ -1,0 +1,80 @@
+<div class="container dashboard-root">
+  <div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Welcome to your admin dashboard</p>
+  </div>
+  <hr/>
+  <hr class="dashboard-hr" />
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger text-center">
+    {{error}}
+  </div>
+
+  <div *ngIf="!error" class="page-content">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Total Users</span>
+          <div class="stat-icon" style="background-color: #3b82f6">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+        <div class="stat-value">{{stats.totalUsers | number}}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Total Orders</span>
+          <div class="stat-icon" style="background-color: #10b981">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+        </div>
+        <div class="stat-value">{{stats.totalOrders | number}}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Total Revenue</span>
+          <div class="stat-icon" style="background-color: #f59e0b">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+        </div>
+        <div class="stat-value">₹{{stats.totalRevenue | number}}</div>
+      </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Recent Orders</h2>
+      </div>
+      <div class="order-table-container">
+        <p *ngIf="recentOrders.length === 0" class="no-orders">No recent orders.</p>
+        <table *ngIf="recentOrders.length > 0" class="order-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of recentOrders">
+              <td>{{order.orderId}}</td>
+              <td>{{order.username}}</td>
+              <td>₹{{order.total}}</td>
+              <td>
+                <span [class]="getStatusBadge(order.status)">{{order.status}}</span>
+              </td>
+              <td>{{order.createdAt | date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

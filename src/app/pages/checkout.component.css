@@ -1,0 +1,59 @@
+.checkout-title {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 2.5rem;                   /* Bigger title */
+  font-weight: 700;                    /* Bold */
+  color: #006241;                      /* Starbucks dark green */
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.checkout-subtitle {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #00754a;                      /* Lighter Starbucks green */
+  text-align: center;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+.btn7{
+  background-color: #00754a;
+  color: white;
+  border: none;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btn7:hover {
+  background-color: #006241;
+  transform: scale(1.02);
+}
+
+.btn7:active {
+  transform: scale(0.98);
+}
+
+/* ✅ Click/focus પર green effect override (Bootstrap fix) */
+.form-control:focus {
+  border-color: green !important;
+  box-shadow: 0px 0px 6px rgba(0, 128, 0, 0.5) !important;
+  outline: none !important;
+}
+
+/* ✅ Hover પર green effect */
+.form-control:hover {
+  border-color: green !important;
+  box-shadow: 0px 0px 6px rgba(0, 128, 0, 0.5) !important;
+}
+
+.form-control, .form-select {
+  font-size: 16px !important;
+}
+
+.phono {
+  font-size: 16px !important;
+}
