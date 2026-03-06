@@ -21,6 +21,18 @@
         </div>
       </div>
 
+      <!-- Category Filter -->
+      <div class="gift-category-filter" *ngIf="!loading && products.length > 0">
+        <div
+          class="category-box"
+          *ngFor="let cat of categories"
+          [class.active]="selectedCategory === cat.key"
+          (click)="onCategorySelect(cat.key)"
+        >
+          {{ cat.label }}
+        </div>
+      </div>
+
       <!-- Products Grid -->
       <ng-container *ngIf="!loading">
         <div *ngIf="filteredProducts.length === 0"

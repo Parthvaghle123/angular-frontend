@@ -32,7 +32,17 @@ export class AdminProductsComponent implements OnInit {
   error: string | null = null;
   searchTerm: string = "";
   categoryFilter: string = "All Categories";
-  categories: string[] = ["Drinks", "Food", "Merchandise", "Gifts", "Other"];
+  categories: string[] = [
+    "Bestseller",
+    "Drinks",
+    "Food",
+    "Coffee At Home",
+    "Ready to Eat",
+    "Anytime",
+    "Congratulations",
+    "Thank You",
+    "Holiday Specials",
+  ];
   selectedProduct: Product | null = null;
   showAddModal: boolean = false;
   showEditModal: boolean = false;
@@ -138,12 +148,16 @@ export class AdminProductsComponent implements OnInit {
 
   openEditModal(product: Product) {
     this.selectedProduct = product;
+    const safeCategory =
+      product.category && this.categories.includes(product.category)
+        ? product.category
+        : "Drinks";
     this.formData = {
       name: product.name || "",
       description: product.description || "",
       price: product.price ? product.price.toString() : "0",
       image: product.image || "",
-      category: product.category || "Other",
+      category: safeCategory,
       stock: product.stock ? product.stock.toString() : "0",
       featured: !!product.featured,
       displayOnGift: !!product.displayOnGift,

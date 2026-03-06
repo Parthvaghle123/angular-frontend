@@ -18,6 +18,18 @@
       </div>
 
       <ng-container *ngIf="!loading">
+        <!-- Category Filter -->
+        <div class="menu-category-filter" *ngIf="products.length > 0">
+          <div
+            class="menu-category-box"
+            *ngFor="let cat of categories"
+            [class.active]="selectedCategory === cat.key"
+            (click)="onCategorySelect(cat.key)"
+          >
+            {{ cat.label }}
+          </div>
+        </div>
+
         <div *ngIf="filteredProducts.length === 0"
              class="alert alert-danger text-center mt-3 fw-bold align-items-center"
              style="width: 18%; background-color: #e7414c; margin: 20px auto; color: white;">

@@ -19,10 +19,20 @@ export class GiftComponent implements OnInit, OnDestroy {
   filteredProducts: Product[] = [];
   displayedProducts: Product[] = [];
   showAllProducts = false;
+  searchQuery: string = "";
+  selectedCategory: string = "all";
   loading: boolean = false;
   error: string | null = null;
   private queryParamsSubscription?: Subscription;
   readonly displayLimit = DISPLAY_LIMIT;
+
+  readonly categories = [
+    { key: "all", label: "All" },
+    { key: "anytime", label: "Anytime" },
+    { key: "congratulations", label: "Congratulations" },
+    { key: "thank-you", label: "Thank You" },
+    { key: "holiday-specials", label: "Holiday Specials" },
+  ];
 
   socials = [
     { icon: "facebook-f", link: "#" },
@@ -47,15 +57,16 @@ export class GiftComponent implements OnInit, OnDestroy {
     this.error = null;
     this.products = [];
     this.filteredProducts = [];
-    
+
     // Fetch products immediately - ensure it happens
     this.fetchProducts();
     
     // Subscribe to query params after initial load
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-      const query = params['q']?.toLowerCase() || "";
+      const query = (params['q'] || "").toLowerCase();
+      this.searchQuery = query;
       if (this.products.length > 0) {
-        this.applyFilter(query);
+        this.applyFilter();
       }
     });
   }
@@ -66,15 +77,50 @@ export class GiftComponent implements OnInit, OnDestroy {
     }
   }
 
-  applyFilter(query: string = "") {
-    if (!query) {
-      this.filteredProducts = [...this.products];
-    } else if (this.products.length > 0) {
-      this.filteredProducts = this.products.filter(item =>
-        (item.name || "").toLowerCase().includes(query)
+  applyFilter(query?: string) {
+    if (query !== undefined) {
+      this.searchQuery = query.toLowerCase();
+    }
+
+    let result = [...this.products];
+
+    if (this.searchQuery) {
+      const q = this.searchQuery;
+      result = result.filter(item =>
+        (item.name || "").toLowerCase().includes(q)
       );
     }
+
+    if (this.selectedCategory !== "all") {
+      result = result.filter(item => this.matchesCategory(item, this.selectedCategory));
+    }
+
+    this.filteredProducts = result;
     this.updateDisplayedProducts();
+  }
+
+  onCategorySelect(categoryKey: string) {
+    if (this.selectedCategory === categoryKey) return;
+    this.selectedCategory = categoryKey;
+    this.showAllProducts = false;
+    this.applyFilter();
+  }
+
+  private matchesCategory(product: Product, categoryKey: string): boolean {
+    const category = (product.category || "").toLowerCase();
+
+    switch (categoryKey) {
+      case "anytime":
+        return category === "anytime";
+      case "congratulations":
+        return category === "congratulations";
+      case "thank-you":
+        return category === "thank you";
+      case "holiday-specials":
+        return category === "holiday specials";
+      default:
+        return true;
+    }
   }
 
   private updateDisplayedProducts() {

@@ -31,9 +31,9 @@
           (ngModelChange)="applyFilters()"
         >
           <option value="All Categories">All Categories</option>
-          <option value="Drinks">Drinks</option>
-          <option value="Food">Food</option>
-          <option value="Gifts">Gifts</option>
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </option>
         </select>
       </div>
 
@@ -198,9 +198,9 @@
                     [(ngModel)]="formData.category"
                     required
                   >
-                    <option value="Drinks">Drinks</option>
-                    <option value="Food">Food</option>
-                    <option value="Gifts">Gifts</option>
+                    <option *ngFor="let cat of categories" [value]="cat">
+                      {{ cat }}
+                    </option>
                   </select>
                 </div>
               </div>
