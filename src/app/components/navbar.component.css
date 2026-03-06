@@ -76,6 +76,10 @@ input[type="search"] {
   transition: all 0.3s ease;
   display: block !important;
   visibility: hidden;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.35rem 0.35rem;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
 .dropdown:hover .dropdown-menu {
@@ -83,6 +87,7 @@ input[type="search"] {
   transform: translateY(0);
   visibility: visible;
 }
+
 
 .search-form {
   flex-grow: 1;
