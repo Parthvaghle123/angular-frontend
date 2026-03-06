@@ -7,4 +7,9 @@ export interface Product {
   per?: string;
   description?: string;
   price?: number;
+  category?: string;
+  isAvailable?: boolean;
+  featured?: boolean;
+  displayOnGift?: boolean;
+  displayOnMenu?: boolean;
 }
